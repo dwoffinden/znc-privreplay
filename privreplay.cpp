@@ -39,6 +39,11 @@ public:
 
             CString msg = vsRet[2];
             msg.LeftChomp(1);
+            
+            // Don't process outgoing CTCP
+            if (msg.Left(1).Equals("\x01"))
+              return (CONTINUE);
+            
             for (int c = 3; vsRet.size() > c; c++)
             {
                 msg += " " + vsRet[c];
