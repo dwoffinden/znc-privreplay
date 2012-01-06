@@ -16,7 +16,7 @@ public:
 
     virtual EModRet OnPrivMsg(CNick& Nick, CString& sMessage)
     {
-        CString msg = CString("[<-] ") + sMessage;
+        CString msg = CString("[->] ") + sMessage;
         StoreMessage(Nick, msg);
 
         return (CONTINUE);
@@ -50,7 +50,7 @@ public:
                 msg += " " + vsRet[c];
             }
 
-            StoreMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :[->] " + msg);
+            StoreMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :[<-] " + msg);
         }
         return (CONTINUE);
     }
