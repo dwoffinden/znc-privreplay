@@ -6,12 +6,23 @@ class CPrivReplay : public CModule
 public:
     MODCONSTRUCTOR(CPrivReplay)
     {
-
+        AddCommand(CString("clear"), static_cast<CModCommand::ModCmdFunc>(&CPrivReplay::ClearPrivateMessages));
     }
 
     virtual ~CPrivReplay()
     {
+        RemCommand(CString("clear"));
+    }
 
+    void ClearPrivateMessages(const CString &command)
+    {
+        if (command != "clear") {
+            return;
+        }
+
+        m_vMessages.clear();
+
+        PutModule(CString("Private messages cleared"));
     }
 
     virtual EModRet OnPrivMsg(CNick& Nick, CString& sMessage)
