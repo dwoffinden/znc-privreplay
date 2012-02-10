@@ -16,7 +16,7 @@ public:
 
     virtual EModRet OnPrivMsg(CNick& Nick, CString& sMessage)
     {
-        CString msg = CString("[->] ") + sMessage;
+        CString msg = m_pUser->AddTimestamp(CString("[->] ") + sMessage);
         StoreMessage(Nick, msg);
 
         return (CONTINUE);
