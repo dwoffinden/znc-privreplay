@@ -61,7 +61,7 @@ public:
                 msg += " " + vsRet[c];
             }
 
-            StoreMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :[<-] " + msg);
+            StoreRawMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :[<-] " + msg);
         }
         return (CONTINUE);
     }
@@ -74,19 +74,10 @@ public:
 private:
     void StoreMessage(const CNick & Nick, CString & sMessage)
     {
-        //PutModule("Store: " + Nick.GetNick() + " -> " + sMessage);
-        if (m_pUser && Nick.GetNick() == m_pUser->GetIRCNick().GetNick())
-        {
-            // StoreMessage(":" + m_pUser->GetIRCNick().GetNick() + " PRIVMSG " + Nick.GetNickMask() + " :" + sMessage);
-            //StoreMessage(":" + Nick.GetNickMask() + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + sMessage);
-        }
-        else
-        {
-            StoreMessage(":" + Nick.GetNickMask() + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + sMessage);
-        }
+        StoreRawMessage(":" + Nick.GetNickMask() + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + sMessage);
     }
 
-    void StoreMessage(const CString & sText)
+    void StoreRawMessage(const CString & sText)
     {
         m_vMessages.push_back(sText);
     }
