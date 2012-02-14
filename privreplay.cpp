@@ -61,7 +61,8 @@ public:
                 msg += " " + vsRet[c];
             }
 
-            StoreRawMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :[<-] " + msg);
+            CString timestamp_msg = m_pUser->AddTimestamp(CString("[<-] ") + msg);
+            StoreRawMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + timestamp_msg);
         }
         return (CONTINUE);
     }
