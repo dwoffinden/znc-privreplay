@@ -1,5 +1,8 @@
-#include "User.h"
+#include "znc/Modules.h"
+#include "znc/User.h"
 #include <sys/stat.h>
+
+using std::vector;
 
 class CPrivReplay : public CModule
 {
@@ -56,13 +59,13 @@ public:
             if (msg.Left(1).Equals("\x01"))
               return (CONTINUE);
             
-            for (int c = 3; vsRet.size() > c; c++)
+            for (unsigned int c = 3; vsRet.size() > c; c++)
             {
                 msg += " " + vsRet[c];
             }
 
             CString timestamp_msg = m_pUser->AddTimestamp(CString("[<-] ") + msg);
-            StoreRawMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + timestamp_msg);
+            StoreRawMessage(":" + vsRet[1] + " PRIVMSG " + m_pUser->GetNick() + " :" + timestamp_msg);
         }
         return (CONTINUE);
     }
@@ -75,7 +78,7 @@ public:
 private:
     void StoreMessage(const CNick & Nick, CString & sMessage)
     {
-        StoreRawMessage(":" + Nick.GetNickMask() + " PRIVMSG " + m_pUser->GetIRCNick().GetNick() + " :" + sMessage);
+        StoreRawMessage(":" + Nick.GetNickMask() + " PRIVMSG " + m_pUser->GetNick() + " :" + sMessage);
     }
 
     void StoreRawMessage(const CString & sText)
